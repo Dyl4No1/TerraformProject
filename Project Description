@@ -1,0 +1,39 @@
+See below the project description given after selecting my dissertation topic:
+
+Project Description: This project will be undertaken from the viewpoint of meeting the requirements of a hypothetical business. 
+Beacon Inc. is a successful SME that is in a transitional phase of significant growth from its micro-enterprise beginnings. 
+It offers software and hardware systems to the emergent market of proximity-based retail and marketing, see here for an overview of the technology and capabilities: http://www.ibeacon.com/what-is-ibeacon-a-guide-to-beacons/  
+
+
+Beacon Inc. want to move their on-premises data and compute capability to the cloud to support its long-term growth predictions. 
+As such you are required to provide an analysis, by undertaking a critical literature review that explores the pro/cons of moving to cloud from a business perspective and includes a technical critique of PaaS vs. IaaS and data security/privacy implications. 
+The technical review must also cover the possibility of being able to move resources between cloud vendors with minimal configuration and downtime (interoperability). 
+
+ 
+You are also required to research and provide a cost/feature comparison matrix (comparing multiple cloud vendors) for the required resource requirements. 
+As part of your analysis you will also be expected to produce a significant risk analysis outlining potential issues of moving on-premises resources to the cloud (backed up with academic and other relevant literature), 
+and significant backup and alternative planning contingencies to ensure business continuity. 
+
+ 
+Following on from the critical analysis you will also provide a mandatory blueprint in the form of a significant technical diagram that visualises the on-premises resources mapped to a redesigned cloud infrastructure that is capable of scaling. 
+You will design, test and deploy  cloud infrastructure using a tool such as Terraform that deploys the cloud infrastructure. 
+The actual resources that need to be migrated are negotiable, however the core requirement in this respect will need to be met to ensure viability as a final year project. 
+Given the nature of this project and development challenges, only students with cloud skills and a willingness to learn new skills should undertake this project. 
+
+
+For the purposes of the project, the below on-premises services should be migrated to cloud:
+
+Physical network topology:
+      1x network with x3 subnets
+Virtual Machines A
+      2x Virtual machines for web apps
+      Machines should be load-balanced
+Virtual Machines B:
+      2x Virtual Machines for SQL
+      Machines should be internally load-balanced
+Other requirements
+      Blob/bucket storage (public and private)
+      Appropriate firewall/security settings
+      Other cloud services as appropriate.
+
+All the above should be created and deployed using Infrastructure-as-Code approaches only, for example (and preferably) Terraform as this is a cross-platform IaC tool.
