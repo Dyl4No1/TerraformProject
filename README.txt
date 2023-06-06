@@ -4,6 +4,8 @@ an alternative was also discussed.
 
 This code was developed straight into the cloud shell editors of both azure and google. any other config has not been tested.
 
+The complexity of the program is partially lacking due to constraints discussed in the dissertation file in this repo
+
 For Azure:
 -click cloud shell icon to the right of search bar.
 -click the "{ }" icon at the top of cloud shell CLI panel
