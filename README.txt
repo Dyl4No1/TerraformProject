@@ -5,6 +5,7 @@ an alternative was also discussed.
 This code was developed straight into the cloud shell editors of both azure and google. any other config has not been tested.
 
 The complexity of the program is partially lacking due to constraints discussed in the dissertation file in this repo
+During the development stages, a better code solution was created but is still incomplete, see the "temp.tf" files in each folder.
 
 For Azure:
 -click cloud shell icon to the right of search bar.
