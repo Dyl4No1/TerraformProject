@@ -1,0 +1,117 @@
+# Create Network Security Group and rules
+# resource "azurerm_network_security_group" "iBeacon-nsg" {
+#   name                = "iBeacon-nsg"
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+
+#   security_rule {
+#     name                       = "RDP"
+#     priority                   = 1000
+#     direction                  = "Inbound"
+#     access                     = "Allow"
+#     protocol                   = "*"
+#     source_port_range          = "*"
+#     destination_port_range     = "3389"
+#     source_address_prefix      = "*"
+#     destination_address_prefix = "*"
+#   }
+#   security_rule {
+#     name                       = "web"
+#     priority                   = 1001
+#     direction                  = "Inbound"
+#     access                     = "Allow"
+#     protocol                   = "Tcp"
+#     source_port_range          = "*"
+#     destination_port_range     = "80"
+#     source_address_prefix      = "*"
+#     destination_address_prefix = "*"
+#   }
+#   security_rule {
+#     name                       = "sql"
+#     priority                   = 1002
+#     direction                  = "Inbound"
+#     access                     = "Allow"
+#     protocol                   = "Tcp"
+#     source_port_range          = "*"
+#     destination_port_range     = "1433"
+#     source_address_prefix      = "*"
+#     destination_address_prefix = "*"
+#   }
+#   ## add rules for sql, other vms and storage/ check discord for old 
+# }
+
+# Create public IP address for sql
+# resource "azurerm_public_ip" "iBeacon-pubIP2" {
+#   name                = "iBeacon-pubIP2"
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+#   allocation_method   = "Dynamic"
+# }
+
+
+# # Connect the security group to the network interface
+# resource "azurerm_network_interface_security_group_association" "sg1" {
+#   network_interface_id      = azurerm_network_interface.iBeacon-nic.id
+#   network_security_group_id = azurerm_network_security_group.iBeacon-nsg.id
+# }
+
+resource "azurerm_mssql_virtual_machine" "sqlVM"{
+  virtual_machine_id = azurerm_virtual_machine.sql.id
+  sql_license_type = "PAYG"
+  r_services_enabled = true # i think r language ?
+  sql_connectivity_port = 1433
+  sql_connectivity_type = "PRIVATE"
+  sql_connectivity_update_password = "Password1234!"  
+  sql_connectivity_update_username = "sqllogin"
+
+  auto_patching {
+    day_of_week = "Sunday"
+    maintenance_window_duration_in_minutes = 60
+    maintenance_window_starting_hour = 2
+  }
+  # auto_backup {
+  #   encryption_enabled = true
+  #   encryption_password = "Password1234!"
+  #   retention_period_in_days = 30 ## higher == more ££
+  #   storage_blob_endpoint = azurerm_storage_account.sqlsa.id
+  #   storage_account_access_key = "Key1234"
+  # }
+}
+
+# resource "azurerm_subnet" "subnets" {
+#   depends_on       = [azurerm_virtual_network.vnet]
+#   for_each         = var.subnets
+#   name             = each.key
+#   address_prefixes = [each.value.address_prefix]
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   lifecycle {
+#     ignore_changes = [name] # ignores recreating of resource from different case name
+#   }
+# }
+#Create subnets for separte sections
+# resource "azurerm_subnet" "GatewaySubnet" { ## storage subnet
+#   name                 = "GatewaySubnet"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes     = ["10.2.0.0/24"]
+# }
+# resource "azurerm_subnet" "webSubnet" { ## web subnet
+#   name                 = "webSubnet"          #"${random_pet.prefix.id}-webSubnet"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes     = ["10.2.1.0/24"]
+# }
+# resource "azurerm_subnet" "sqlSubnet" { ## sql subnet
+#   name                 = "sqlSubnet"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes     = ["10.2.2.0/24"]
+# }
+# # Create public IP address for web
+# resource "azurerm_public_ip" "iBeacon-pubIP" {
+#   name                = "iBeacon-pubIP"
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+#   allocation_method   = "Dynamic"
+# }
